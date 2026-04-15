@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="description" content="Golf fitness workout tracker with exercise videos">
+
+  <!-- PWA -->
+  <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2d6a4f">
+
+  <!-- iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Golf Workouts">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+
+  <title>Golf Workouts</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+  <!-- ── View: Home ──────────────────────────────────────── -->
+  <div id="view-home" class="view active">
+    <header class="app-header">
+      <div class="header-inner">
+        <span class="app-icon">⛳</span>
+        <h1 class="app-title">Golf Workouts</h1>
+      </div>
+    </header>
+    <main class="view-content" id="home-content">
+      <!-- Rendered by app.js -->
+    </main>
+  </div>
+
+  <!-- ── View: Program ───────────────────────────────────── -->
+  <div id="view-program" class="view">
+    <header class="app-header">
+      <div class="header-inner">
+        <button class="back-btn" id="program-back" aria-label="Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <h1 class="view-title" id="program-title">Program</h1>
+      </div>
+    </header>
+    <main class="view-content" id="program-content">
+      <!-- Rendered by app.js -->
+    </main>
+  </div>
+
+  <!-- ── View: Workout ───────────────────────────────────── -->
+  <div id="view-workout" class="view">
+    <header class="app-header">
+      <div class="header-inner">
+        <button class="back-btn" id="workout-back" aria-label="Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <h1 class="view-title" id="workout-title">Workout</h1>
+      </div>
+    </header>
+    <main class="view-content" id="workout-content">
+      <!-- Rendered by app.js -->
+    </main>
+    <div class="finish-bar">
+      <button class="finish-btn" id="finish-btn">Finish Workout ✓</button>
+    </div>
+  </div>
+
+  <!-- ── View: History ───────────────────────────────────── -->
+  <div id="view-history" class="view">
+    <header class="app-header">
+      <div class="header-inner">
+        <button class="back-btn" id="history-back" aria-label="Back">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <h1 class="view-title" id="history-title">History</h1>
+      </div>
+    </header>
+    <main class="view-content" id="history-content">
+      <!-- Rendered by app.js -->
+    </main>
+  </div>
+
+  <!-- ── Exercise Modal ──────────────────────────────────── -->
+  <div id="modal-backdrop" class="modal-backdrop" aria-hidden="true"></div>
+
+  <div id="exercise-modal" class="exercise-modal" role="dialog" aria-modal="true" aria-labelledby="modal-exercise-name">
+    <div class="modal-drag-handle" id="modal-drag-handle"></div>
+
+    <div class="modal-body">
+      <h2 class="modal-exercise-name" id="modal-exercise-name"></h2>
+
+      <div class="modal-video-wrap" id="modal-video-wrap">
+        <iframe
+          id="modal-video"
+          class="modal-video"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+          loading="lazy"
+          title="Exercise video">
+        </iframe>
+        <div class="modal-no-video" id="modal-no-video" style="display:none">
+          <span class="no-video-icon">📵</span>
+          <p>No video available</p>
+        </div>
+      </div>
+
+      <div class="modal-description" id="modal-description"></div>
+
+      <div class="modal-cues" id="modal-cues-wrap">
+        <h3 class="cues-heading">Coaching Cues</h3>
+        <ul class="cues-list" id="modal-cues-list"></ul>
+      </div>
+
+      <button class="modal-close-btn" id="modal-close-btn">Close</button>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/modal.js"></script>
+  <script src="js/app.js"></script>
+
+  <!-- Service Worker -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      navigator.serviceWorker.register('sw.js').catch(function(err) {
+        console.warn('Service worker registration failed:', err);
+      });
+    }
+  </script>
+
+</body>
+</html>

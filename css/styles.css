@@ -1,0 +1,863 @@
+/* Golf Fitness Tracker — Mobile-first styles */
+
+/* ─── Custom Properties ─────────────────────────────────────────────── */
+:root {
+  --color-bg:          #0f1f17;
+  --color-surface:     #1a2f22;
+  --color-surface-2:   #223a2c;
+  --color-border:      #2d4a38;
+  --color-primary:     #52b788;
+  --color-primary-dim: #2d6a4f;
+  --color-accent:      #74c69d;
+  --color-text:        #e8f5ee;
+  --color-text-dim:    #95bba6;
+  --color-text-muted:  #5c8a6e;
+  --color-warmup:      #e07a5f;
+  --color-prep:        #f2cc8f;
+  --color-intervals:   #81b29a;
+  --color-strength:    #52b788;
+  --color-stretch:     #9ec5b0;
+  --radius-card:       14px;
+  --radius-modal:      20px;
+  --shadow-card:       0 2px 12px rgba(0,0,0,0.4);
+  --header-height:     56px;
+  --safe-bottom:       env(safe-area-inset-bottom, 0px);
+}
+
+/* ─── Reset ─────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ─── Views ─────────────────────────────────────────────────────────── */
+.view {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-bg);
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+  z-index: 1;
+}
+
+.view.active {
+  transform: translateX(0);
+}
+
+.view.slide-in {
+  transform: translateX(0);
+}
+
+/* ─── Header ────────────────────────────────────────────────────────── */
+.app-header {
+  flex-shrink: 0;
+  height: var(--header-height);
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 0 16px;
+  padding-top: env(safe-area-inset-top, 0px);
+}
+
+.header-inner {
+  display: flex;
+  align-items: center;
+  height: var(--header-height);
+  gap: 10px;
+}
+
+.app-icon {
+  font-size: 24px;
+  line-height: 1;
+}
+
+.app-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--color-accent);
+  letter-spacing: -0.3px;
+}
+
+.view-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+  flex: 1;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.back-btn {
+  flex-shrink: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--color-primary);
+  padding: 8px;
+  margin-left: -8px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.back-btn svg {
+  width: 24px;
+  height: 24px;
+}
+
+.back-btn:active {
+  background: var(--color-border);
+}
+
+/* ─── View Content (scrollable area) ───────────────────────────────── */
+.view-content {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 16px 16px calc(16px + var(--safe-bottom));
+}
+
+/* ─── Program Cards (home screen) ───────────────────────────────────── */
+.program-card,
+.workout-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 18px 16px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  box-shadow: var(--shadow-card);
+  transition: background 0.15s, transform 0.1s;
+  min-height: 72px;
+  text-decoration: none;
+}
+
+.program-card:active,
+.workout-card:active {
+  background: var(--color-surface-2);
+  transform: scale(0.98);
+}
+
+.card-main {
+  flex: 1;
+  min-width: 0;
+}
+
+.card-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.card-subtitle {
+  font-size: 13px;
+  color: var(--color-text-dim);
+}
+
+.card-meta {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.card-chevron {
+  width: 20px;
+  height: 20px;
+  color: var(--color-text-muted);
+  flex-shrink: 0;
+}
+
+.program-subtitle-text {
+  font-size: 14px;
+  color: var(--color-text-dim);
+  margin-bottom: 16px;
+  padding-left: 2px;
+}
+
+/* ─── Section ───────────────────────────────────────────────────────── */
+.section {
+  margin-bottom: 20px;
+  background: var(--color-surface);
+  border-radius: var(--radius-card);
+  overflow: hidden;
+  border: 1px solid var(--color-border);
+  box-shadow: var(--shadow-card);
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-left: 4px solid var(--color-primary-dim);
+}
+
+.section--warmup   .section-header { border-left-color: var(--color-warmup); }
+.section--movement_prep .section-header { border-left-color: var(--color-prep); }
+.section--intervals .section-header { border-left-color: var(--color-intervals); }
+.section--strength .section-header { border-left-color: var(--color-strength); }
+.section--stretch  .section-header { border-left-color: var(--color-stretch); }
+
+.section-title {
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--color-text);
+}
+
+.section-note {
+  font-size: 12px;
+  color: var(--color-text-muted);
+  font-weight: 500;
+}
+
+.section-items {
+  padding: 4px 0;
+}
+
+/* ─── Exercise Row ──────────────────────────────────────────────────── */
+.exercise-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 14px;
+  min-height: 56px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--color-border);
+  transition: background 0.12s;
+}
+
+.exercise-row:last-child {
+  border-bottom: none;
+}
+
+.exercise-row:active {
+  background: var(--color-surface-2);
+}
+
+.exercise-row-text {
+  flex: 1;
+  min-width: 0;
+}
+
+.exercise-name {
+  display: block;
+  font-size: 16px;
+  font-weight: 500;
+  color: var(--color-text);
+  line-height: 1.3;
+}
+
+.exercise-note {
+  display: block;
+  font-size: 12px;
+  color: var(--color-text-muted);
+  margin-top: 2px;
+}
+
+.exercise-row-right {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.video-badge {
+  font-size: 14px;
+  line-height: 1;
+  opacity: 0.9;
+}
+
+.video-badge--none {
+  opacity: 0.5;
+}
+
+.exercise-chevron {
+  width: 16px;
+  height: 16px;
+  color: var(--color-text-muted);
+}
+
+/* ─── Superset Block ────────────────────────────────────────────────── */
+.superset-block {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--color-border);
+}
+
+.superset-block:last-child {
+  border-bottom: none;
+}
+
+.superset-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  flex-shrink: 0;
+  background: var(--color-surface-2);
+  border-right: 1px solid var(--color-border);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--color-primary);
+  letter-spacing: 0.5px;
+}
+
+.superset-exercises {
+  flex: 1;
+  min-width: 0;
+}
+
+.superset-exercise {
+  border-bottom: none !important;
+}
+
+.superset-connector {
+  display: flex;
+  align-items: center;
+  padding: 2px 14px;
+  background: var(--color-surface-2);
+  border-top: 1px dashed var(--color-border);
+  border-bottom: 1px dashed var(--color-border);
+}
+
+.superset-connector span {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+
+/* ─── Info Block (Intervals) ────────────────────────────────────────── */
+.info-block {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 16px 14px;
+}
+
+.info-icon {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.info-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 2px;
+}
+
+.info-desc {
+  font-size: 14px;
+  color: var(--color-accent);
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.info-hint {
+  font-size: 13px;
+  color: var(--color-text-muted);
+}
+
+/* ─── Modal Backdrop ────────────────────────────────────────────────── */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  z-index: 100;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+
+.modal-backdrop.is-open {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ─── Exercise Modal ────────────────────────────────────────────────── */
+.exercise-modal {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  max-height: 90vh;
+  background: var(--color-surface);
+  border-radius: var(--radius-modal) var(--radius-modal) 0 0;
+  z-index: 101;
+  transform: translateY(100%);
+  transition: transform 0.32s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  will-change: transform;
+}
+
+.exercise-modal.is-open {
+  transform: translateY(0);
+}
+
+.modal-drag-handle {
+  flex-shrink: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 12px 0 8px;
+  cursor: grab;
+}
+
+.modal-drag-handle::before {
+  content: '';
+  width: 40px;
+  height: 4px;
+  background: var(--color-border);
+  border-radius: 2px;
+}
+
+.modal-body {
+  flex: 1;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding: 0 20px calc(20px + var(--safe-bottom));
+}
+
+.modal-exercise-name {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-accent);
+  margin-bottom: 16px;
+  line-height: 1.2;
+}
+
+/* ─── Video ─────────────────────────────────────────────────────────── */
+.modal-video-wrap {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 10px;
+  overflow: hidden;
+  margin-bottom: 18px;
+}
+
+.modal-video {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+.modal-no-video {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  background: var(--color-surface-2);
+  color: var(--color-text-muted);
+  font-size: 14px;
+}
+
+.no-video-icon {
+  font-size: 32px;
+}
+
+/* ─── Description & Cues ────────────────────────────────────────────── */
+.modal-description {
+  font-size: 15px;
+  line-height: 1.65;
+  color: var(--color-text-dim);
+  margin-bottom: 18px;
+}
+
+.modal-cues {
+  background: var(--color-surface-2);
+  border-radius: 10px;
+  padding: 14px 16px;
+  margin-bottom: 20px;
+}
+
+.cues-heading {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.7px;
+  color: var(--color-primary);
+  margin-bottom: 10px;
+}
+
+.cues-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.cues-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 14px;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+.cues-list li::before {
+  content: '→';
+  color: var(--color-primary);
+  flex-shrink: 0;
+  font-weight: 700;
+  margin-top: 1px;
+}
+
+/* ─── Modal Close Button ────────────────────────────────────────────── */
+.modal-close-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--color-primary-dim);
+  color: var(--color-text);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.modal-close-btn:active {
+  background: var(--color-primary);
+}
+
+/* ─── Missing exercise fallback ─────────────────────────────────────── */
+.exercise-row--missing {
+  color: var(--color-text-muted);
+  font-size: 13px;
+  font-style: italic;
+}
+
+/* ─── Checkbox ───────────────────────────────────────────────────────── */
+.exercise-checkbox-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  flex-shrink: 0;
+  margin-left: -8px;
+}
+
+.exercise-checkbox {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--color-border);
+  border-radius: 6px;
+  background: var(--color-surface-2);
+  cursor: pointer;
+  flex-shrink: 0;
+  position: relative;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.exercise-checkbox:checked {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.exercise-checkbox:checked::after {
+  content: '';
+  position: absolute;
+  left: 5px;
+  top: 2px;
+  width: 10px;
+  height: 6px;
+  border-left: 2.5px solid #fff;
+  border-bottom: 2.5px solid #fff;
+  transform: rotate(-45deg);
+}
+
+/* Completed row styling */
+.exercise-row--done .exercise-name {
+  color: var(--color-text-muted);
+  text-decoration: line-through;
+  text-decoration-color: var(--color-primary-dim);
+}
+
+/* ─── Weight Input ───────────────────────────────────────────────────── */
+.weight-input-wrap {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: 6px;
+}
+
+.weight-input {
+  width: 60px;
+  padding: 6px 6px;
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-size: 14px;
+  font-weight: 500;
+  text-align: center;
+  -moz-appearance: textfield;
+}
+
+.weight-input::-webkit-inner-spin-button,
+.weight-input::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.weight-input::placeholder {
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
+.weight-input:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  background: var(--color-surface);
+}
+
+/* ─── History Button (on workout cards) ─────────────────────────────── */
+.history-btn {
+  background: var(--color-surface-2);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text-dim);
+  font-size: 12px;
+  font-weight: 600;
+  padding: 6px 10px;
+  cursor: pointer;
+  flex-shrink: 0;
+  white-space: nowrap;
+  transition: background 0.15s, color 0.15s;
+}
+
+.history-btn:active {
+  background: var(--color-primary-dim);
+  color: var(--color-text);
+}
+
+/* ─── Finish Bar ─────────────────────────────────────────────────────── */
+.finish-bar {
+  flex-shrink: 0;
+  padding: 12px 16px calc(12px + var(--safe-bottom));
+  background: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+}
+
+.finish-btn {
+  width: 100%;
+  padding: 16px;
+  background: var(--color-primary-dim);
+  color: var(--color-text);
+  border: none;
+  border-radius: 12px;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+  letter-spacing: 0.2px;
+}
+
+.finish-btn:active {
+  background: var(--color-primary);
+}
+
+.finish-btn--saved {
+  background: var(--color-primary);
+}
+
+/* ─── History Screen ─────────────────────────────────────────────────── */
+.history-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 60px 24px;
+  text-align: center;
+  gap: 8px;
+}
+
+.history-empty-icon {
+  font-size: 48px;
+  margin-bottom: 8px;
+}
+
+.history-empty p {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.history-empty-sub {
+  font-size: 14px !important;
+  font-weight: 400 !important;
+  color: var(--color-text-muted) !important;
+}
+
+.history-session {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-card);
+  padding: 16px;
+  margin-bottom: 14px;
+  box-shadow: var(--shadow-card);
+}
+
+.history-session-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.history-session-header-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.history-date {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--color-accent);
+}
+
+.history-time {
+  font-size: 12px;
+  color: var(--color-text-muted);
+}
+
+.delete-session-btn {
+  background: none;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  color: var(--color-text-muted);
+  font-size: 14px;
+  padding: 4px 8px;
+  cursor: pointer;
+  line-height: 1;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  white-space: nowrap;
+}
+
+.delete-session-btn:active {
+  background: var(--color-surface-2);
+}
+
+.delete-session-btn--confirm {
+  background: var(--color-warmup);
+  border-color: var(--color-warmup);
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.history-completion {
+  margin-bottom: 12px;
+}
+
+.history-completion-count {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--color-primary);
+}
+
+.history-completion-label {
+  font-size: 14px;
+  color: var(--color-text-dim);
+}
+
+.history-weight-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 10px;
+}
+
+.history-weight-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 14px;
+}
+
+.history-ex-name {
+  color: var(--color-text-dim);
+  flex: 1;
+  margin-right: 8px;
+}
+
+.history-ex-weight {
+  color: var(--color-text);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.history-weight-item--done .history-ex-name {
+  color: var(--color-text-muted);
+}
+
+.history-weight-item--done .history-ex-weight {
+  color: var(--color-primary);
+}
+
+.history-no-weights {
+  font-size: 13px;
+  color: var(--color-text-muted);
+  margin-top: 8px;
+  border-top: 1px solid var(--color-border);
+  padding-top: 10px;
+}
+
+/* ─── Tablet / larger screens ───────────────────────────────────────── */
+@media (min-width: 540px) {
+  .view-content {
+    max-width: 480px;
+    margin: 0 auto;
+    padding-left: 0;
+    padding-right: 0;
+  }
+
+  .exercise-modal {
+    max-width: 480px;
+    left: 50%;
+    right: auto;
+    transform: translateX(-50%) translateY(100%);
+  }
+
+  .exercise-modal.is-open {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  .modal-backdrop { /* full width on tablet too */ }
+}
