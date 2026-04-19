@@ -1,5 +1,5 @@
 // Golf Fitness Tracker — Service Worker
-const CACHE_NAME = 'golf-fitness-v3';
+const CACHE_NAME = 'golf-fitness-v4';
 
 const APP_SHELL = [
   '/',

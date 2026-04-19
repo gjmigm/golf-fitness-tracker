@@ -61,6 +61,16 @@
   // ─── Finish Button ───────────────────────────────────────────────────────
   const finishBtn = document.getElementById('finish-btn');
   finishBtn.addEventListener('click', function () {
+    if (!currentSessionId) {
+      // Nothing was recorded — don't create an empty session
+      finishBtn.textContent = 'Nothing recorded';
+      finishBtn.classList.add('finish-btn--saved');
+      setTimeout(() => {
+        finishBtn.textContent = 'Finish Workout ✓';
+        finishBtn.classList.remove('finish-btn--saved');
+      }, 2000);
+      return;
+    }
     finishBtn.textContent = 'Workout Saved! ✓';
     finishBtn.classList.add('finish-btn--saved');
     setTimeout(() => {
@@ -159,9 +169,16 @@
     }
     if (!workout) return;
 
-    // Always start a fresh session
-    currentSessionId = State.startSession(workoutId);
+    // Session is created lazily on first interaction, not on open
+    currentSessionId = null;
     currentWorkoutId = workoutId;
+
+    // Create session on first checkbox tick or weight entry
+    function ensureSession() {
+      if (!currentSessionId) {
+        currentSessionId = State.startSession(currentWorkoutId);
+      }
+    }
 
     // Pre-load weights from last session
     const lastWeights = State.getLastWeights(workoutId);
@@ -187,6 +204,7 @@
         } else {
           row.classList.remove('exercise-row--done');
         }
+        ensureSession();
         State.saveExercise(currentSessionId, key, { completed: this.checked });
       });
     });
@@ -197,6 +215,7 @@
       input.addEventListener('input', function () {
         const key = this.dataset.exerciseKey;
         const val = this.value === '' ? null : parseFloat(this.value);
+        ensureSession();
         State.saveExercise(currentSessionId, key, { weight: val });
       });
     });
