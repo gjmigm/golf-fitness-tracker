@@ -17,8 +17,55 @@
 
   <title>Golf Workouts</title>
   <link rel="stylesheet" href="css/styles.css">
+
+  <!-- Inline splash — visible immediately before any JS loads -->
+  <style>
+    #app-splash {
+      position: fixed; inset: 0; z-index: 999;
+      display: flex; flex-direction: column;
+      align-items: center; justify-content: center; gap: 16px;
+      background: #0f1f17;
+    }
+    #app-splash .splash-icon { font-size: 56px; }
+    #app-splash .splash-title { font-size: 22px; font-weight: 700; color: #74c69d; font-family: -apple-system, sans-serif; }
+    #app-splash .splash-sub { font-size: 14px; color: #5c8a6e; font-family: -apple-system, sans-serif; }
+    #app-splash .splash-reload {
+      margin-top: 8px; padding: 14px 32px;
+      background: #2d6a4f; color: #e8f5ee;
+      border: none; border-radius: 12px;
+      font-size: 16px; font-weight: 600; cursor: pointer;
+      font-family: -apple-system, sans-serif; display: none;
+    }
+  </style>
 </head>
 <body>
+
+  <!-- Splash screen — hidden by app.js once init succeeds, or shows reload on error -->
+  <div id="app-splash">
+    <span class="splash-icon">⛳</span>
+    <span class="splash-title">Golf Workouts</span>
+    <span class="splash-sub" id="splash-sub">Loading…</span>
+    <button class="splash-reload" id="splash-reload" onclick="window.location.reload()">Tap to Reload</button>
+  </div>
+
+  <!-- Global error safety net -->
+  <script>
+    var _appInitTimeout = setTimeout(function () {
+      // If app hasn't hidden the splash within 5s, something went wrong
+      var sub = document.getElementById('splash-sub');
+      var btn = document.getElementById('splash-reload');
+      if (sub) sub.textContent = 'Something went wrong.';
+      if (btn) btn.style.display = 'block';
+    }, 5000);
+
+    window.onerror = function () {
+      clearTimeout(_appInitTimeout);
+      var sub = document.getElementById('splash-sub');
+      var btn = document.getElementById('splash-reload');
+      if (sub) sub.textContent = 'Something went wrong.';
+      if (btn) btn.style.display = 'block';
+    };
+  </script>
 
   <!-- ── View: Home ──────────────────────────────────────── -->
   <div id="view-home" class="view active">

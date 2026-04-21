@@ -474,4 +474,13 @@
   viewStack.push({ viewId: 'home', data: null });
   renderHome();
 
+  // Hide splash screen — app initialised successfully
+  var splash = document.getElementById('app-splash');
+  if (splash) {
+    splash.style.transition = 'opacity 0.25s';
+    splash.style.opacity = '0';
+    setTimeout(function () { splash.style.display = 'none'; }, 260);
+  }
+  if (typeof _appInitTimeout !== 'undefined') clearTimeout(_appInitTimeout);
+
 })();
