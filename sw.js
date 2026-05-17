@@ -1,18 +1,21 @@
 // Golf Fitness Tracker — Service Worker
-const CACHE_NAME = 'golf-fitness-v5';
+const CACHE_NAME = 'golf-fitness-v6';
 
+// Use relative paths so the app works whether hosted at / or a subdirectory
+// (e.g. GitHub Pages at /golf-fitness-tracker/)
+const BASE = self.registration.scope;
 const APP_SHELL = [
-  '/',
-  '/index.html',
-  '/offline.html',
-  '/manifest.json',
-  '/css/styles.css',
-  '/js/data.js',
-  '/js/state.js',
-  '/js/app.js',
-  '/js/modal.js',
-  '/icons/icon-192.png',
-  '/icons/icon-512.png'
+  BASE,
+  BASE + 'index.html',
+  BASE + 'offline.html',
+  BASE + 'manifest.json',
+  BASE + 'css/styles.css',
+  BASE + 'js/data.js',
+  BASE + 'js/state.js',
+  BASE + 'js/app.js',
+  BASE + 'js/modal.js',
+  BASE + 'icons/icon-192.png',
+  BASE + 'icons/icon-512.png'
 ];
 
 // ─── Install: pre-cache app shell ────────────────────────────────────
@@ -66,7 +69,7 @@ self.addEventListener('fetch', event => {
         .catch(() => {
           // Offline fallback for navigation requests
           if (event.request.mode === 'navigate') {
-            return caches.match('/offline.html');
+            return caches.match(BASE + 'offline.html');
           }
         });
     })
