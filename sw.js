@@ -1,5 +1,5 @@
 // Golf Fitness Tracker — Service Worker
-const CACHE_NAME = 'golf-fitness-v6';
+const CACHE_NAME = 'golf-fitness-v7';
 
 // Use relative paths so the app works whether hosted at / or a subdirectory
 // (e.g. GitHub Pages at /golf-fitness-tracker/)
